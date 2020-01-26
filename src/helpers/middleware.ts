@@ -31,11 +31,11 @@ export async function checkTime(ctx: ContextMessageUpdate, next: () => any) {
       next()
     } else {
       console.log(
-        `Ignoring message from ${ctx.from.id} at ${
+        `Ignoring message from  ${ctx.from.id} at ${
           ctx.chat.id
         } (${new Date().getTime() / 1000}:${
           (ctx.message || ctx.channelPost).date
-        })`
+        })`,
       )
     }
   } else {
