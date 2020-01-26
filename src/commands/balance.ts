@@ -4,13 +4,13 @@ import { getUser, getUserInfo } from '../models'
 
 // Balance command
 export function setupBalance(bot: Telegraf<ContextMessageUpdate>) {
-  bot.command('balance', async (ctx) => {
+  bot.command('balance', async (ctx: any) => {
     // Get user
     const user = await getUser(ctx.from.id)
     // Get chat user
     const userInfo = await getUserInfo(ctx.telegram, user)
     // Prepare text
-    const text = `Добрый день, *${userInfo.name}*! У вас *${userInfo.balance}* Лавкоинов.`
+    const text = `Добрый день, *${userInfo.name}*! У вас *${userInfo.balance}* Вирускоинов.`
     // Reply
     ctx.replyWithMarkdown(text)
   })

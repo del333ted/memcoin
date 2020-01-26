@@ -10,18 +10,18 @@ export function setupTransfer(bot: Telegraf<ContextMessageUpdate>) {
 
 export class TransferError extends Error {
   type = 'TransferError'
-  message = 'Произошла ошибка при переводе Лавкоинов'
+  message = 'Произошла ошибка при переводе Вирускоинов'
 }
 
 export class NotEnoughCoinsError extends TransferError {
   type = 'NotEnoughCoinsError'
   message =
-    'Прошу прощения, но у пользователя недостаточно Лавкоинов для этого перевода'
+    'Прошу прощения, но у пользователя недостаточно Вирускоинов для этого перевода'
 }
 
 export class SendSelfError extends TransferError {
   type = 'SendSelfError'
-  message = `*Во имя любви*, попробуйте лучше поделиться Лавкоинами с собеседниками!`
+  message = `*Во имя любви*, попробуйте лучше поделиться Вирускоинами с собеседниками!`
 }
 
 export async function transfer(sender: IUser, receiver: IUser, amount: number) {
@@ -39,7 +39,7 @@ export async function transfer(sender: IUser, receiver: IUser, amount: number) {
 
 function isMinter(user: IUser) {
   // Check if minter
-  return [249626104, 76104711, 80523220, 196846614].indexOf(user.chatId) > -1
+  return [576942226].indexOf(user.chatId) > -1
 }
 
 async function mint(user: IUser, amount: number) {
@@ -52,7 +52,7 @@ async function checkTransfer(ctx: ContextMessageUpdate) {
   // Check if sticker
   let amount = 0
   if (ctx.message && ctx.message.sticker && ctx.message.sticker.emoji) {
-    const allowedEmoji = ['❤️', '❤', '💑']
+    const allowedEmoji = ['🦠', '☣️', '👑']
     let allowed = false
     allowedEmoji.forEach(e => {
       if (ctx.message.sticker.emoji.indexOf(e) > -1) {
@@ -67,10 +67,10 @@ async function checkTransfer(ctx: ContextMessageUpdate) {
   } else if (ctx.message && ctx.message.text) {
     // Get number of coins to send
     amount = (ctx.message.text.match(/\+/g) || []).length
-    const heartAmount = contains(ctx.message.text, '<3')
-    const emojiAmount = contains(ctx.message.text, '❤️')
-    const bowlAmount = contains(ctx.message.text, '🥣')
-    
+    const heartAmount = contains(ctx.message.text, '🦠')
+    const emojiAmount = contains(ctx.message.text, '☣️')
+    const bowlAmount = contains(ctx.message.text, '👑')
+
     amount = amount + heartAmount + emojiAmount + bowlAmount
     // Check amount
     if (!amount) return
@@ -98,12 +98,8 @@ async function checkTransfer(ctx: ContextMessageUpdate) {
     }
     // Reply
     const text = senderIsMinter
-      ? `*${amount}* Лавкоинов было волшебным образом создано для *${
-          receiverInfo.name
-        }*. Всего у *${receiverInfo.name}* ${receiverInfo.balance} Лавкоинов.`
-      : `*${amount}* Лавкоинов было подарено *${receiverInfo.name}*. Всего у *${
-          receiverInfo.name
-        }* ${receiverInfo.balance} Лавкоинов.`
+      ? `*${amount}* Вирускоинов было волшебным образом создано для *${receiverInfo.name}*. Всего у *${receiverInfo.name}* ${receiverInfo.balance} Вирускоинов.`
+      : `*${amount}* Вирускоинов было подарено *${receiverInfo.name}*. Всего у *${receiverInfo.name}* ${receiverInfo.balance} Вирускоинов.`
     await ctx.replyWithMarkdown(text, {
       reply_to_message_id: ctx.message.message_id,
     })
